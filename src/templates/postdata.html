@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POSTDATA</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>   
+
+
+
+
+<form method="POST">
+    {% csrf_token %} 
+    <!-- <button type="submit" class="btn btn-info my-2">Submit</button> -->
+    <table>
+        <tr>
+            <td>First name:</td><td><input id="fn" type="text"/></td>
+        </tr>
+        <tr>
+            <td>last_name:</td><td><input id="ln" type="text"/></td>
+        </tr>
+        <tr>
+            <td>age:</td><td><input id="ag" type="text"/></td>
+        </tr>
+        <tr>
+            <td>Gender:</td><td><input id="gdr" type="text"/></td>
+        </tr>            
+    </table>
+    <button onclick="save_data()">Save</button>
+  </form>
+
+
+
+
+  <script>
+    $('.apireq').click(function save_data() {
+      var token = "{{csrf_token}}";
+      var f = $("#fn").val();
+      var l = $("#ln").val();
+      var a = $("#ag").val();
+      var g = $("#gdr").val();
+
+      $.ajax({
+        type: "POST",
+        headers: { "X-CSRFToken": token },
+        url: "http://127.0.0.1:8000/src/ap/",
+        data: { first_name: f, last_name: l, age: a, gender:g },
+
+        success: function (data) {
+          
+          console.log(data);
+        },
+        error: function (data) {
+            console.log(error);
+        }
+      });
+    });
+  </script>
+</body>
+
+
+</html>
